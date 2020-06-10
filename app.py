@@ -34,5 +34,13 @@ st.header("Radar Chart")
 game = tuple(radar_df['Name'].unique())
 values = st.selectbox("Game",game)
 selected_df = radar_df.where(radar_df['Name']==values)
-f = px.radar(selected_df, x="Year", y="Sales", title='Yearly Sales')
+selected_df = selected_df.dropna().drop(columns=['Name'])
+selected_df = selected_df.T.reset_index(drop=False)
+selected_df.columns = ['feature','value']
+st.write(selected_df)
+
+f = px.line_polar(selected_df, r='value', theta='feature', line_close=True)
+f.update_traces(fill='toself')
 st.plotly_chart(f)
+
+
