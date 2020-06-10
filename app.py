@@ -6,9 +6,9 @@ st.title("If you want to be an esport player")
 
 @st.cache
 def get_data(name):
-    if name = 'pie':
+    if name == 'pie':
         return pd.read_csv("https://raw.githubusercontent.com/Xiao-Wang-UCSD/EsportPlayer/master/data/pie-chart-data.csv")
-    if name = 'line':
+    if name == 'line':
         return pd.read_csv("https://raw.githubusercontent.com/Xiao-Wang-UCSD/EsportPlayer/master/data/line-chart-data.csv")
 
 pie_df = get_data('pie')
@@ -19,7 +19,7 @@ selected_df = pie_df.where(pie_df['Year']==values)
 f = px.pie(selected_df, values='Players', names='Name', title='Player Population')
 st.plotly_chart(f)
 
-line_df = get_data()
+line_df = get_data('line')
 st.header("Line Chart")
 game = tuple(line_df['Name'].unique())
 values = st.selectbox("Game",game)
