@@ -1,6 +1,5 @@
-Name,fiture1,fiture2,fiture3,fiture4,fiture5
-lol1,0.4,0.5,0.6,0.1,0.8
-lol2,0.4,0.5,0.6,0.1,0.8
-lol3,0.3,0.5,0.3,0.8,0.8
-lol4,0.4,0.5,0.2,0.1,0.8
-lol5,0.2,0.5,0.6,0.5,0.8
+Name,Average Player Rate,Average Player Earning,Average Player Growth,Average Tournaments,Average Prize,,,,,,
+Dota2,0.77,61006.93574,-6.291138029,113.5,"56,141,632.62",,,,,,
+CS:GO,3.22,7532.287,3.584982751,379.25,"24,131,564.48",,,,,,
+Overwatch,0.01,6231.175217,25,89.25,"5,425,795.82",,,,,,
+LOL,0.01,10878.28859,3.75,125,"18,892,867.70",,,,,,
