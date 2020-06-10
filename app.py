@@ -10,6 +10,8 @@ def get_data(name):
         return pd.read_csv("https://raw.githubusercontent.com/Xiao-Wang-UCSD/EsportPlayer/master/data/pie-chart-data.csv")
     if name == 'line':
         return pd.read_csv("https://raw.githubusercontent.com/Xiao-Wang-UCSD/EsportPlayer/master/data/line-chart-data.csv")
+    if name == 'radar':
+        return pd.read_csv("https://raw.githubusercontent.com/Xiao-Wang-UCSD/EsportPlayer/master/data/radar-chart-data.csv")
 
 pie_df = get_data('pie')
 st.header("Pie Chart")
@@ -25,4 +27,12 @@ game = tuple(line_df['Name'].unique())
 values = st.selectbox("Game",game)
 selected_df = line_df.where(line_df['Name']==values)
 f = px.line(selected_df, x="Year", y="Sales", title='Yearly Sales')
+st.plotly_chart(f)
+
+radar_df = get_data('radar')
+st.header("Radar Chart")
+game = tuple(radar_df['Name'].unique())
+values = st.selectbox("Game",game)
+selected_df = radar_df.where(radar_df['Name']==values)
+f = px.radar(selected_df, x="Year", y="Sales", title='Yearly Sales')
 st.plotly_chart(f)
