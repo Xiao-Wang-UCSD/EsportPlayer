@@ -6,6 +6,8 @@ st.title("If you want to be an esport player")
 
 @st.cache
 def get_data(name):
+    if name == 'market':
+        return pd.read_csv("https://raw.githubusercontent.com/Xiao-Wang-UCSD/EsportPlayer/master/data/market-chart-data.csv")
     if name == 'pie':
         return pd.read_csv("https://raw.githubusercontent.com/Xiao-Wang-UCSD/EsportPlayer/master/data/pie-chart-data.csv")
     if name == 'line':
@@ -20,6 +22,14 @@ def get_data(name):
 full_df = get_data('full')
 st.header("Overview")
 st.write(full_df)
+
+market_df = get_data('market')[['Revenue','Year']]
+st.header("Market Chart")
+selected_df = market_df
+selected_df = selected_df.dropna()
+f = px.bar(selected_df, x="Year", y = 'Revenue',title = 'Total Market Pool')
+st.plotly_chart(f)
+
 
 pie_df = get_data('pie')
 st.header("Pie Chart")
