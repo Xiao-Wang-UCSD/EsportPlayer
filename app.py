@@ -8,11 +8,9 @@ def get_data():
 
 df = get_data()
 st.title("Streamlit 101: An in-depth introduction")
-st.markdown("Welcome to this in-depth introduction to [Streamlit](www.streamlit.io)! For this exercise, we'll use an Airbnb [dataset](http://data.insideairbnb.com/united-states/ny/new-york-city/2019-09-12/visualisations/listings.csv) containing NYC listings.")
-st.header("What is the distribution of property price?")
-st.write("""Select a custom price range from the side bar to update the histogram below displayed as a Plotly chart using
-[`st.plotly_chart`](https://streamlit.io/docs/api.html#streamlit.plotly_chart).""")
-values = st.sidebar.slider("Price range", float(df.price.min()), float(df.price.clip(upper=1000.).max()), (50., 300.))
+#st.markdown("Welcome to this in-depth introduction to [Streamlit](www.streamlit.io)! For this exercise, we'll use an Airbnb [dataset](http://data.insideairbnb.com/united-states/ny/new-york-city/2019-09-12/visualisations/listings.csv) containing NYC listings.")
+st.header("Pie Chart")
+values = st.selectbox("Year", ())
 selected_df = df['price'].where((df['price']>=values[0]) & (df['price']<=values[1]))
 f = px.histogram(selected_df, x="price", nbins=15, title="Price distribution")
 f.update_xaxes(title="Price")
