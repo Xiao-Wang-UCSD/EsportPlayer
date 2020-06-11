@@ -130,12 +130,12 @@ xaxis_config = {
         }
 
 
-prize_df = get_data('prize')[['Name','Total Prize Poll','Year']]
+prize_df = get_data('prize')[['Name','Total Prize Pool','Year']]
 st.header("Prize Chart")
 values = st.selectbox("Year ",years)
 selected_df = prize_df.where(prize_df['Year']==str(values))
 selected_df = selected_df.dropna()
-f = px.bar(selected_df, x="Name", y = 'Total Prize Poll',title = 'Total Prize Pool')
+f = px.bar(selected_df, x="Name", y = 'Total Prize Pool',title = 'Total Prize Pool')
 f.update_layout(
     title=title_config,
     yaxis={
@@ -238,8 +238,10 @@ def calculate_score(q1_value,q2_value,q3_value,q4_value):
 
 recommended = calculate_score(q1,q2,q3,q4)
 
-recommend_button = st.button('Recommend for me!')
+recommend_msg = "You should play "
+
+recommend_button = st.button('Recommend for me')
 if recommend_button:
-    st.write(recommended)
+    st.write(recommend_msg+recommended+'!')
 
 
