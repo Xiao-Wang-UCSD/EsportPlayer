@@ -128,7 +128,7 @@ line_df = get_data('line')[['Name','Tournaments#','Year']]
 st.header("Opportunities")
 game = ['All']
 game += list(line_df['Name'].unique())
-values = st.selectbox("Select a Game",game)
+values = st.selectbox("Select Game",game)
 
 if values != 'All':
     selected_df = line_df.where(line_df['Name']==values)
@@ -166,7 +166,7 @@ xaxis_config = {
 
 prize_df = get_data('prize')[['Name','Total Prize Pool','Year']]
 st.header("Let the Money Talk")
-values = st.selectbox("Year ",years)
+values = st.selectbox("Select Year ",years)
 selected_df = prize_df.where(prize_df['Year']==str(values))
 selected_df = selected_df.dropna()
 f = px.bar(selected_df, x="Name", y = 'Total Prize Pool',title = 'Total Prize Pool',color='Total Prize Pool')
@@ -234,7 +234,7 @@ radar_df = get_data('radar')
 st.header("Make a Better Decision")
 game = ['All']
 game+=list(radar_df['Name'].unique())
-values = st.selectbox("Game ",game)
+values = st.selectbox("Select Game ",game)
 
 title_config['text'] = values
 
