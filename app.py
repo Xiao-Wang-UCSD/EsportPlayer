@@ -45,10 +45,10 @@ yaxis_config = {
         }
 
 market_df = get_data('market')[['Revenue','Year']]
-st.header("Market Chart")
+st.header("Understand the Market")
 selected_df = market_df
 selected_df = selected_df.dropna()
-f = px.bar(selected_df, x="Year", y = 'Revenue',title = 'Total Market Pool')
+f = px.bar(selected_df, x="Year", y = 'Revenue',title = 'Total Market Size')
 f.update_layout(
     title=title_config,
     xaxis=xaxis_config,
@@ -68,7 +68,7 @@ legend_config = {
         }
 
 pie_df = get_data('pie')
-st.header("Pie Chart")
+st.header("Which Game is the Most Popular?")
 years = tuple(pie_df['Year'].unique()) 
 values = st.selectbox("Year",years)
 selected_df = pie_df.where(pie_df['Year']==values)
@@ -97,7 +97,7 @@ st.plotly_chart(f)
 
 # Show the line chart
 line_df = get_data('line')[['Name','Tournaments#','Year']]
-st.header("Line Chart")
+st.header("Opportunities")
 game = ['All']
 game += list(line_df['Name'].unique())
 values = st.selectbox("Select a Game",game)
@@ -109,7 +109,7 @@ else:
     selected_df = line_df
     selected_df = selected_df.dropna()
 
-f = px.line(selected_df, x="Year", y="Tournaments#",title='Yearly Tournament',color='Name')
+f = px.line(selected_df, x="Year", y="Tournaments#",title='Tournament per Year',color='Name')
 f.update_layout(
     title=title_config,
     xaxis=xaxis_config,
@@ -132,7 +132,7 @@ xaxis_config = {
 
 
 prize_df = get_data('prize')[['Name','Total Prize Pool','Year']]
-st.header("Prize Chart")
+st.header("Let the Money Talk")
 values = st.selectbox("Year ",years)
 selected_df = prize_df.where(prize_df['Year']==str(values))
 selected_df = selected_df.dropna()
@@ -162,7 +162,7 @@ legend_config = {
         'y':-0.4,
         'traceorder':"normal",
         'font':{
-            'size':12
+            'size':8
             }
         }
 
@@ -194,7 +194,7 @@ def show_radar_all(selected_df):
 
 
 radar_df = get_data('radar')
-st.header("Radar Chart")
+st.header("Make a Better Decision")
 game = ['All']
 game+=list(radar_df['Name'].unique())
 values = st.selectbox("Game ",game)
@@ -216,14 +216,15 @@ st.header("Survey")
 q4_str = "Do you like to participate in many small competitions or just a few big ones?"
 q4_selection = {'Many small ones':0,'A good mixture':1,'A few big ones':2}
 
-q2_str = "Do you want to compete as a pro player rather than professional player?"
-q2_selection = {"Yes, I don't have to be professional":0,'Not sure':1,'Gotta be professional':2}
+q2_str = "What if esports is your only income source?"
+q2_selection = {"No, that is too risky":0,'Not sure':1,'Sure, I am all-in':2}
 
 q3_str = "Do you care about playing a trendy game?"
 q3_selection = {"Absolutely, if it's not trendy, I won't play":0,'I dont care':1}
 
 q1_str = "Are you very good at FPS game?"
 q1_selection = {'I am born for it':0,'Very good':1,'Not where my best is at':2}
+
 
 q1 = st.radio(q1_str,list(q1_selection))
 q2 = st.radio(q2_str,list(q2_selection))
