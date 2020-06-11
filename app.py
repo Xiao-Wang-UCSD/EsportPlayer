@@ -33,7 +33,7 @@ title_config = {
 
 
 # Show the full dataframe
-raw_data_button = st.button('Show Raw Data')
+raw_data_button = st.checkbox('Show Raw Data')
 full_df = get_data('full')
 if raw_data_button:
     st.header("Overview")
@@ -53,9 +53,6 @@ market_df = get_data('market')[['Revenue','Year']]
 st.header("Understand the Market")
 selected_df = market_df
 selected_df = selected_df.dropna()
-
-
-st.write(np.array(selected_df['Year']))
 
 poly = PolynomialFeatures(degree=2)
 X_ = poly.fit_transform(np.array(selected_df['Year']).reshape(-1,1))
@@ -89,7 +86,7 @@ legend_config = {
 pie_df = get_data('pie')
 st.header("Which Game is the Most Popular?")
 years = tuple(pie_df['Year'].unique()) 
-values = st.selectbox("Year",years)
+values = st.selectbox("Select Year",years)
 selected_df = pie_df.where(pie_df['Year']==values)
 selected_df = selected_df.dropna()
 f = px.pie(selected_df, values='Players', names='Name', title='Player Population')
