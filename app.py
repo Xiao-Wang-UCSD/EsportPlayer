@@ -42,9 +42,16 @@ if raw_data_button:
 
 # Show the market chart
 
+legend_config = {
+        'traceorder':"normal",
+        'font':{
+            'size':14
+            }
+        }
 
 xaxis_config = {
-        'tickmode':'linear'
+        'tickmode':'linear',
+        'title':'Year'
         }
 yaxis_config = {
         "title":'Revenue(MM)'
@@ -71,14 +78,15 @@ predict = reg.predict(X_)
 
 fig=go.Figure()
 fig.add_trace(go.Bar(name='Total Market Size', x=selected_df['Year'], y=selected_df['Revenue']))
-fig.add_trace(go.Scatter(name='2nd Order Regression Line', x=selected_df['Year'], y=predict))
+fig.add_trace(go.Scatter(name='2nd Polynomial Line', x=selected_df['Year'], y=predict))
 
 
 
 fig.update_layout(
     title=title_config,
     xaxis=xaxis_config,
-    yaxis=yaxis_config
+    yaxis=yaxis_config,
+    legend=legend_config
     )
 st.plotly_chart(fig)
 
