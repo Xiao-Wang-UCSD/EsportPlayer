@@ -129,8 +129,8 @@ xaxis_config = {
         'title':'Game'
         }
 
-st.write(get_data('prize'))
-prize_df = get_data('prize')[['Name','Total Prize Poll#2016','Year']]
+
+prize_df = get_data('prize')[['Name','Total Prize Poll','Year']]
 st.header("Prize Chart")
 values = st.selectbox("Year ",years)
 selected_df = prize_df.where(prize_df['Year']==str(values))
@@ -163,8 +163,22 @@ f.update_layout(
 f.update_traces(fill='toself')
 st.plotly_chart(f)
 
-q1_str = "Do you like to participate in many small competitions or just a few big ones?"
-q1_selection = ['Many small ones','A good mixture','A few big ones']
-q1 = st.slider(q1_str,q1_selection)
 
+
+q4_str = "Do you like to participate in many small competitions or just a few big ones?"
+q4_selection = ['Many small ones','A good mixture','A few big ones']
+
+q2_str = "Do you want to compete as a pro player rather than professional player?"
+q2_selection = ["Yes, I don't have to be professional",'Not sure','Gotta be professional']
+
+q3_str = "Do you care about playing a trendy game?"
+q3_selection = ["Absolutely, if it's not trendy I won't play",'I dont care','No, I like classic games']
+
+q1_str = "Are you very good at FPS game?"
+q1_selection = ['I am born for it','Very good','Not where my best is at']
+
+q1 = st.radio(q1_str,q1_selection)
+q2 = st.radio(q2_str,q2_selection)
+q3 = st.radio(q3_str,q3_selection)
+q4 = st.radio(q4_str,q4_selection)
 
