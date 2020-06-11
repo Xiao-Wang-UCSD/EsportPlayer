@@ -24,7 +24,8 @@ title_config = {
         'y':0.9,
         'x':0.5,
         'xanchor': 'center',
-        'yanchor': 'top'}
+        'yanchor': 'top'
+        }
 
 
 # Show the full dataframe
@@ -38,6 +39,9 @@ st.write(full_df)
 xaxis_config = {
         'tickmode':'linear'
         }
+yaxis_config = {
+        "title":'Revenue(MM)'
+        }
 
 market_df = get_data('market')[['Revenue','Year']]
 st.header("Market Chart")
@@ -47,13 +51,21 @@ f = px.bar(selected_df, x="Year", y = 'Revenue',title = 'Total Market Pool')
 f.update_layout(
     title=title_config,
     xaxis=xaxis_config,
-    yaxis={
-        "title":'Revenue(MM)'
-    }
+    yaxis=yaxis_config
     )
 st.plotly_chart(f)
 
 # Show the pie chart
+
+legend_config = {
+        'x':0.8,
+        'y':-0.4,
+        'traceorder':"normal",
+        'font':{
+            'size':15
+            }
+        }
+
 pie_df = get_data('pie')
 st.header("Pie Chart")
 years = tuple(pie_df['Year'].unique()) 
@@ -63,17 +75,8 @@ selected_df = selected_df.dropna()
 f = px.pie(selected_df, values='Players', names='Name', title='Player Population')
 f.update_layout(
     title=title_config,
-    legend={
-        'x':0.8,
-        'y':-0.4,
-        'traceorder':"normal",
-        'font':{
-            #'family':"sans-serif",
-            'size':15,
-            #'color':"black"
-        },
-    }
-)
+    legend=legend_config
+    )
 
 colors = None#['gold', 'yellow', 'lightblue', 'lightgreen']
 f.update_traces(
@@ -85,8 +88,8 @@ f.update_traces(
         'line':{
             'color':'white',
             'width':1
-        }
-    },
+            }
+            },
     textposition='inside'
     )
 st.plotly_chart(f)
@@ -110,10 +113,12 @@ f.update_layout(
     title=title_config,
     xaxis=xaxis_config,
     yaxis={
-        "title":'Tournaments',
-        'range':[20,180]
+        "title":'Tournaments'
+        #'range':[20,180]
         #,'rangemode':"tozero"
-    }
+    },
+    legend_title_text='',
+    legend = {'x':1.05,'y':1.03}
     )
 st.plotly_chart(f)
 
