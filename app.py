@@ -136,7 +136,7 @@ st.header("Let the Money Talk")
 values = st.selectbox("Year ",years)
 selected_df = prize_df.where(prize_df['Year']==str(values))
 selected_df = selected_df.dropna()
-f = px.bar(selected_df, x="Name", y = 'Total Prize Pool',title = 'Total Prize Pool')
+f = px.bar(selected_df, x="Name", y = 'Total Prize Pool',title = 'Total Prize Pool',color='lifeExp')
 f.update_layout(
     title=title_config,
     yaxis={
