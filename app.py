@@ -26,19 +26,31 @@ title_config = {
         'xanchor': 'center',
         'yanchor': 'top'}
 
+
 # Show the full dataframe
 full_df = get_data('full')
 st.header("Overview")
 st.write(full_df)
 
 # Show the market chart
+
+
+xaxis_config = {
+        'tickmode':'linear'
+        }
+
 market_df = get_data('market')[['Revenue','Year']]
 st.header("Market Chart")
 selected_df = market_df
 selected_df = selected_df.dropna()
 f = px.bar(selected_df, x="Year", y = 'Revenue',title = 'Total Market Pool')
 f.update_layout(
-    title=title_config)
+    title=title_config,
+    xaxis=xaxis_config,
+    yaxis={
+        "title":'Revenue(MM)'
+    }
+    )
 st.plotly_chart(f)
 
 # Show the pie chart
@@ -50,23 +62,68 @@ selected_df = pie_df.where(pie_df['Year']==values)
 selected_df = selected_df.dropna()
 f = px.pie(selected_df, values='Players', names='Name', title='Player Population')
 f.update_layout(
-    title=title_config)
+    title=title_config,
+    legend={
+        'x':0.8,
+        'y':-0.4,
+        'traceorder':"normal",
+        'font':{
+            #'family':"sans-serif",
+            'size':15,
+            #'color':"black"
+        },
+    }
+)
+
+colors = None#['gold', 'yellow', 'lightblue', 'lightgreen']
+f.update_traces(
+    hoverinfo='label+percent',
+    textfont_size=14,
+    textfont_color='white',
+    marker={
+        'colors':colors, 
+        'line':{
+            'color':'white',
+            'width':1
+        }
+    },
+    textposition='inside'
+    )
 st.plotly_chart(f)
 
 # Show the line chart
 line_df = get_data('line')[['Name','Tournaments#','Year']]
 st.header("Line Chart")
-game = tuple(line_df['Name'].unique())
-values = st.selectbox("Game",game)
-selected_df = line_df.where(line_df['Name']==values)
-selected_df = selected_df.dropna()
+game = ['All']
+game += list(line_df['Name'].unique())
+values = st.selectbox("Select a Game",game)
 
-f = px.line(selected_df, x="Year", y="Tournaments#",title='Yearly Tournament')
+if values != 'All':
+    selected_df = line_df.where(line_df['Name']==values)
+    selected_df = selected_df.dropna()
+else:
+    selected_df = line_df
+    selected_df = selected_df.dropna()
+
+f = px.line(selected_df, x="Year", y="Tournaments#",title='Yearly Tournament',color='Name')
 f.update_layout(
-    title=title_config)
+    title=title_config,
+    xaxis=xaxis_config,
+    yaxis={
+        "title":'Tournaments',
+        'range':[20,180]
+        #,'rangemode':"tozero"
+    }
+    )
 st.plotly_chart(f)
 
 # Show the chart for total prize
+
+
+xaxis_config = {
+        'title':'Game'
+        }
+
 prize_df = get_data('prize')[['Name','Total Prize Poll#2016','Year']]
 st.header("Prize Chart")
 values = st.selectbox("Year ",years)
@@ -74,7 +131,13 @@ selected_df = prize_df.where(prize_df['Year']==str(values))
 selected_df = selected_df.dropna()
 f = px.bar(selected_df, x="Name", y = 'Total Prize Poll#2016',title = 'Total Prize Pool')
 f.update_layout(
-    title=title_config)
+    title=title_config,
+    yaxis={
+        "title":'Total Prize',
+        'rangemode':"tozero"
+    },
+    xaxis=xaxis_config,
+    )
 st.plotly_chart(f)
 
 # Show the radar chart
