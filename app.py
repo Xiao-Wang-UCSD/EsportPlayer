@@ -34,6 +34,7 @@ title_config = {
 
 # Show the full dataframe
 raw_data_button = st.checkbox('Show Raw Data')
+show=st.checkbox('Show Text')
 full_df = get_data('full')
 if raw_data_button:
     st.header("Overview")
@@ -48,7 +49,10 @@ xaxis_config = {
 yaxis_config = {
         "title":'Revenue(MM)'
         }
-
+if show:
+    st.header("Story Background")
+    st.text("Hank: Bro, you know me. I always enjoy playing games and my dream is to make a living on it. A lot of pro gamers became famous in esports and started to make a lot of money. I am jealous. So, how’s the market? Is it really growing fast? ")
+    st.text("Sean: Oh, man, it’s booming and it’s going to keep rapidly growing in the next few years. Look at the chart and see how crazy it is growing? ")
 market_df = get_data('market')[['Revenue','Year']]
 st.header("Understand the Market")
 selected_df = market_df
@@ -73,7 +77,11 @@ fig.update_layout(
 st.plotly_chart(fig)
 
 # Show the pie chart
-
+if show:
+    st.text("Hank: Wow, that’s great. What a great opportunity for me to start a career in esports! But what game should I focus on?")
+    st.text("Sean: That really depends on what you are good at. But I will walk you through the most popular ones and you can probably make a choice after.")
+    st.text("Hank: Thanks, bro. You are really helping me a lot. ")
+    st.text("Sean: Look at the first pie chart. It shows the player population. The larger the area is, the more popular the game is.")
 legend_config = {
         'x':0.8,
         'y':-0.4,
@@ -111,6 +119,10 @@ f.update_traces(
     )
 st.plotly_chart(f)
 
+if show:
+    st.text("Hank: Wow. I have never realized that LOL is way more popular than the rest. With these many players, there must be a lot of tournaments I can show off at. Since LOL is the most popular, I guess it has the most tournament opportunities, right?")
+    st.text("Sean: Not really. Look at this chart. It shows the number of tournaments each game has every year.")
+
 # Show the line chart
 line_df = get_data('line')[['Name','Tournaments#','Year']]
 st.header("Opportunities")
@@ -140,6 +152,11 @@ f.update_layout(
 st.plotly_chart(f)
 
 # Show the chart for total prize
+if show:
+    st.text("Hank: Interesting. It looks like CS: GO has the most tournaments. And it is also the least popular?")
+    st.text("Sean: Yeah that is big data man. CS:GO actually has the best esports environment so it has many competitions. There are so many opportunities for young gamers like you.")
+    st.text("Hank: That really makes sense. Thank you a lot bro! I think I can simply choose CS:GO as the start of my career since I can win tons of money from these tournaments.")
+    st.text("Sean: Not so hurry boi. If you are interested in money, then let’s talk about the sexiest. Look at this chart, it shows the actual prize pool each game has every year. Dota2 is the most generous and they gave out over 30M dollars!")
 
 
 xaxis_config = {
@@ -164,6 +181,10 @@ f.update_layout(
 st.plotly_chart(f)
 
 # Show the radar chart
+if show:
+    st.text("Hank: Wow! No wonder why professional Dota gamers like Puppey are so rich! But, wait, this is really confusing. Dota2 has the least tournaments but it has the largest rewards? Should I be a professional Dota2 player then?")
+    st.text("Sean: Well, that also means it can be quite competitive. To really make the best decision, we need a bigger picture! Let’s look at this radar chart I made for you! So this radar chart has five aspects, Player growth, Average earning, Professional rate(It’s basically how hard it is to become a professional player), Total prize each year, and Total tournaments. The larger the number, the better for you.")
+    st.text("Hank: Wow. This chart really helps me a lot. But I still need to spend more time considering my option. ")
 
 title_config = {
         'y':0.9,
@@ -224,7 +245,9 @@ else:
     selected_df = selected_df.dropna()
     show_radar_all(selected_df)
 
-
+if show:
+    st.text("Sean: Dude, I made a small recommendation system for you. Just answer the questions and I will recommend to you which game you should play professionally.")
+    
 # Survey section
 
 st.header("Mini Recommendation System")
