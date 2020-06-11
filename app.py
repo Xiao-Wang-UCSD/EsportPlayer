@@ -2,8 +2,11 @@ import pandas as pd
 import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
+from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import PolynomialFeatures
+import numpy as np
 
-st.title("If you want to be an esport player")
+st.title("If You Want to be an Esports Player")
 
 @st.cache
 def get_data(name):
@@ -30,9 +33,11 @@ title_config = {
 
 
 # Show the full dataframe
+raw_data_button = st.button('Show Raw Data')
 full_df = get_data('full')
-st.header("Overview")
-st.write(full_df)
+if raw_data_button:
+    st.header("Overview")
+    st.write(full_df)
 
 # Show the market chart
 
@@ -48,13 +53,27 @@ market_df = get_data('market')[['Revenue','Year']]
 st.header("Understand the Market")
 selected_df = market_df
 selected_df = selected_df.dropna()
-f = px.bar(selected_df, x="Year", y = 'Revenue',title = 'Total Market Size')
-f.update_layout(
+
+
+st.write(np.array(selected_df['Year']))
+
+poly = PolynomialFeatures(degree=2)
+X_ = poly.fit_transform(np.array(selected_df['Year']).reshape(-1,1))
+reg = LinearRegression().fit(X_,np.array(selected_df['Revenue']))
+predict = reg.predict(X_)
+
+fig=go.Figure()
+fig.add_trace(go.Bar(name='Total Market Size', x=selected_df['Year'], y=selected_df['Revenue']))
+fig.add_trace(go.Scatter(name='2nd Order Regression Line', x=selected_df['Year'], y=predict))
+
+
+
+fig.update_layout(
     title=title_config,
     xaxis=xaxis_config,
     yaxis=yaxis_config
     )
-st.plotly_chart(f)
+st.plotly_chart(fig)
 
 # Show the pie chart
 
@@ -211,7 +230,7 @@ else:
 
 # Survey section
 
-st.header("Survey")
+st.header("Mini Recommendation System")
 
 q4_str = "Do you like to participate in many small competitions or just a few big ones?"
 q4_selection = {'Many small ones':0,'A good mixture':1,'A few big ones':2}
@@ -288,6 +307,6 @@ recommend_msg = "You should play "
 
 recommend_button = st.button('Recommend for me')
 if recommend_button:
-    st.write(recommend_msg+recommended+'!')
+    st.success(recommend_msg+recommended+'!')
 
 
