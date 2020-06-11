@@ -129,12 +129,13 @@ xaxis_config = {
         'title':'Game'
         }
 
+st.write(get_data('prize'))
 prize_df = get_data('prize')[['Name','Total Prize Poll#2016','Year']]
 st.header("Prize Chart")
 values = st.selectbox("Year ",years)
 selected_df = prize_df.where(prize_df['Year']==str(values))
 selected_df = selected_df.dropna()
-f = px.bar(selected_df, x="Name", y = 'Total Prize Poll#2016',title = 'Total Prize Pool')
+f = px.bar(selected_df, x="Name", y = 'Total Prize Poll',title = 'Total Prize Pool')
 f.update_layout(
     title=title_config,
     yaxis={
@@ -161,5 +162,9 @@ f.update_layout(
     title=title_config)
 f.update_traces(fill='toself')
 st.plotly_chart(f)
+
+q1_str = "Do you like to participate in many small competitions or just a few big ones?"
+q1_selection = ['Many small ones','A good mixture','A few big ones']
+q1 = st.slider(q1_str,q1_selection)
 
 
