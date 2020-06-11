@@ -1,6 +1,7 @@
 import pandas as pd
 import streamlit as st
 import plotly.express as px
+import plotly.graph_objects as go
 
 st.title("If you want to be an esport player")
 
@@ -147,21 +148,65 @@ f.update_layout(
 st.plotly_chart(f)
 
 # Show the radar chart
+
+title_config = {
+        'y':0.9,
+        'x':0.5,
+        'xanchor': 'center',
+        'yanchor': 'top',
+        'text':'ok'
+        }
+
+legend_config = {
+        'x':0.8,
+        'y':-0.4,
+        'traceorder':"normal",
+        'font':{
+            'size':12
+            }
+        }
+
+def show_radar_all(selected_df):
+    selected_df = selected_df.copy()
+    fig = go.Figure()
+    for i in selected_df['Name'].unique():
+        temp = selected_df.where(selected_df['Name']==i)
+        temp = temp.dropna().drop(columns=['Name'])
+        temp = temp.T.reset_index(drop=False)
+        temp.columns = ['feature','value']
+        fig.add_trace(go.Scatterpolar(
+            r=temp['value'],
+            theta=temp['feature'],
+            fill='toself',
+            name=i
+        ))
+
+    fig.update_layout(
+        title=title_config,
+        polar=dict(
+            radialaxis=dict(
+            range=[0, 5]
+            )),
+        legend=legend_config    
+    )
+    fig.update_traces(fill='toself')
+    st.plotly_chart(fig)
+
+
 radar_df = get_data('radar')
 st.header("Radar Chart")
-game = tuple(radar_df['Name'].unique())
+game = ['All']
+game+=list(radar_df['Name'].unique())
 values = st.selectbox("Game ",game)
-selected_df = radar_df.where(radar_df['Name']==values)
-selected_df = selected_df.dropna().drop(columns=['Name'])
-selected_df = selected_df.T.reset_index(drop=False)
-selected_df.columns = ['feature','value']
-st.write(selected_df)
 
-f = px.line_polar(selected_df, r='value', theta='feature', line_close=True)
-f.update_layout(
-    title=title_config)
-f.update_traces(fill='toself')
-st.plotly_chart(f)
+title_config['text'] = values
+
+if values=='All':
+    show_radar_all(radar_df)
+else:
+    selected_df = radar_df.where(radar_df['Name']==values)
+    selected_df = selected_df.dropna()
+    show_radar_all(selected_df)
 
 
 # Survey section
