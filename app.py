@@ -350,10 +350,13 @@ recommend_button = st.button('Recommend for me')
 if recommend_button:
     st.success(recommend_msg+recommended+'!')
 
-st.header('Reference')
-st.write('https://steamcharts.com/app/570#All')
-st.write('https://www.statista.com/statistics/618035/number-gamers-overwatch-worldwide/')
-st.write('https://www.statista.com/topics/4266/league-of-legends/')
-st.write('https://www.statista.com/statistics/607472/dota2-users-number/')
-st.write('https://www.statista.com/statistics/808922/csgo-users-number/')
+reference_data_button = st.checkbox('Show Reference')
+if reference_data_button:
+    st.markdown('---')
+    st.header('Reference')
+    st.write('https://steamcharts.com/app/570#All')
+    st.write('https://www.statista.com/statistics/618035/number-gamers-overwatch-worldwide/')
+    st.write('https://www.statista.com/topics/4266/league-of-legends/')
+    st.write('https://www.statista.com/statistics/607472/dota2-users-number/')
+    st.write('https://www.statista.com/statistics/808922/csgo-users-number/')
 
